@@ -1,4 +1,4 @@
-
+//% weight=6 color=#2699BF icon="\uf1eb" block="CW01_ATT"
 namespace cw01_att
 {
 
@@ -80,7 +80,7 @@ namespace cw01_att
     * Connect to W-Fi 
     */
     //% weight=91 color=#ad0303
-    //% group="Common"
+    //% group="WiFi"
     //% blockId="connectToWifi" block="CW01 connect to WiFi SSID %SSID password %PSK"
     export function connectToWifi(SSID: string, PSK: string): void {
         serial.writeString("AT+CWMODE=1" + cw01_vars.NEWLINE)
@@ -120,7 +120,7 @@ namespace cw01_att
     * Enable feedback through microbit Matrix LEDs
     */
     //% weight=91 color=#ad0303
-    //% group="Common"
+    //% group="WiFi"
     //% blockId="enableFeedback" block="CW01 enable feedback LEDs %u"
     export function enableFeedback(u: boolean): void
     {

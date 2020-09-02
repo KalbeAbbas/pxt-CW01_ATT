@@ -7,6 +7,7 @@ namespace cw01_att
         NEWLINE: string
         DEVICE_ID: string
         TOKEN: string
+        start: boolean
         asset_name: string
         constructor() {
             this.res = ""
@@ -28,6 +29,52 @@ namespace cw01_att
     let cw01_button_object = new button_class()
     let cw01_vars = new cw01_int_var123()
     let en_Feedback: boolean = true
+
+    cw01_vars.start = true
+    serial.redirect(SerialPin.P1, SerialPin.P0, 115200)
+    serial.setRxBufferSize(200)
+
+    basic.showIcon(IconNames.Chessboard)
+    basic.pause(2000)
+    serial.writeString("ATE0" + cw01_vars.NEWLINE)
+    basic.pause(300)
+    serial.readString()
+    serial.writeString("AT+CWMODE_DEF=3" + cw01_vars.NEWLINE)
+    basic.pause(300)
+    serial.writeString("AT+CIPRECVMODE=1" + cw01_vars.NEWLINE)
+    basic.pause(300)
+    serial.writeString("AT+TEST" + cw01_vars.NEWLINE)
+    basic.pause(300)
+    serial.readString();
+    serial.writeString("AT+CWHOSTNAME?" + cw01_vars.NEWLINE);
+    basic.pause(1000)
+
+    read_and_set_name();
+
+    function read_and_set_name(): void {
+        let name: string = "";
+        name = serial.readString()
+
+        if (!(name.includes("CW01"))) {
+            serial.writeString("AT+CWHOSTNAME=\"CW01\"" + cw01_vars.NEWLINE)
+            basic.pause(1000)
+            control.reset()
+        }
+    }
+
+    function extract_mac(): string {
+        let raw_str: string = ""
+        let mac_addr: string = ""
+        let index: number = 0
+        serial.writeString("AT+CIPSTAMAC_CUR?" + cw01_vars.NEWLINE)
+        basic.pause(500)
+        raw_str = serial.readString()
+        index = raw_str.indexOf("\"") + 1
+
+        mac_addr = raw_str.substr(index, 17)
+
+        return mac_addr
+    }
 
     /**
     * Connect to W-Fi 

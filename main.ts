@@ -264,7 +264,7 @@ namespace cw01_att
     */
     //% weight=91
     //% group="ATT"
-    //% blockId="IoTSendGPSToATT" block="CW01 send GPS %lat and %lon to ATT asset %asset_name"
+    //% blockId="IoTSendGPSToATT" block="CW01 send GPS latitude %lat and lonitude %lon to ATT asset %asset_name"
     export function IoTSendGPSToATT(lat: string, lon: string, asset_name: string): void {
 
         let att_connected: string = ""

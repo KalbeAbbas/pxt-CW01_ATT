@@ -237,7 +237,7 @@ namespace cw01_att
                 att_connected = ""
             }
 
-            //get_status()
+            get_status()
 
         } while (att_connected.includes("link is not valid"))
 
